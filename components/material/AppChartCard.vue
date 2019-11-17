@@ -1,9 +1,5 @@
 <template>
-  <material-card
-    v-bind="$attrs"
-    class="v-card--material-chart"
-    v-on="$listeners"
-  >
+  <material-card v-bind="$attrs" class="v-card--material-chart" v-on="$listeners">
     <chartist
       slot="header"
       :data="data"
@@ -16,74 +12,71 @@
 
     <slot />
 
-    <slot
-      slot="actions"
-      name="actions"
-    />
+    <slot slot="actions" name="actions" />
   </material-card>
 </template>
 
 <script>
-  import materialCard from '~/components/material/AppCard'
+import materialCard from "~/components/material/AppCard";
 
-  export default {
-    inheritAttrs: false,
-    components: {
-      materialCard
+export default {
+  inheritAttrs: false,
+  components: {
+    materialCard
+  },
+  props: {
+    data: {
+      type: Object,
+      default: () => ({})
     },
-    props: {
-      data: {
-        type: Object,
-        default: () => ({})
-      },
-      eventHandlers: {
-        type: Array,
-        default: () => ([])
-      },
-      options: {
-        type: Object,
-        default: () => ({})
-      },
-      ratio: {
-        type: String,
-        default: 'none'
-      },
-      responsiveOptions: {
-        type: Array,
-        default: () => ([])
-      },
-      type: {
-        type: String,
-        required: true,
-        validator: v => ['Bar', 'Line', 'Pie'].includes(v)
-      }
+    eventHandlers: {
+      type: Array,
+      default: () => []
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    },
+    ratio: {
+      type: String,
+      default: "none"
+    },
+    responsiveOptions: {
+      type: Array,
+      default: () => []
+    },
+    type: {
+      type: String,
+      required: true,
+      validator: v => ["Bar", "Line", "Pie"].includes(v)
     }
   }
+};
 </script>
 
 <style lang="scss">
-  .v-card--material-chart {
-    .v-card--material__header {
-      .ct-label {
-        color: inherit;
-        opacity: .7;
-        font-size: 0.975rem;
-        font-weight: 100;
-      }
+.v-card--material-chart {
+  .v-card--material__header {
+    .ct-label {
+      color: inherit;
+      opacity: 0.7;
+      font-size: 0.975rem;
+      font-weight: 100;
+    }
 
-      .ct-grid{
-        stroke: rgba(255, 255, 255, 0.2);
-      }
-      .ct-series-a .ct-point,
-      .ct-series-a .ct-line,
-      .ct-series-a .ct-bar,
-      .ct-series-a .ct-slice-donut {
-          stroke: rgba(255,255,255,.8);
-      }
-      .ct-series-a .ct-slice-pie,
-      .ct-series-a .ct-area {
-          fill: rgba(255,255,255,.4);
-      }
+    .ct-grid {
+      stroke: rgba(255, 255, 255, 0.2);
+    }
+    .ct-series-a .ct-point,
+    .ct-series-a .ct-line,
+    .ct-series-a .ct-bar,
+    .ct-series-a .ct-slice-donut {
+      stroke: rgba(255, 255, 255, 0.8);
+    }
+    .ct-series-a .ct-slice-pie,
+    .ct-series-a .ct-area {
+      fill: rgba(255, 255, 255, 0.4);
     }
   }
+}
 </style>

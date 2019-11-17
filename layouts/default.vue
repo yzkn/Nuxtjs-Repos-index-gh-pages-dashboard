@@ -7,16 +7,16 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        isLoading: true
-      }
-    },
-    mounted() {
-      this.$nextTick(function() {
-        this.isLoading = false
-      });
-    }
+export default {
+  data() {
+    return {
+      isLoading: true
+    };
+  },
+  mounted() {
+    this.$nextTick(function() {
+      this.isLoading = false;
+    });
   }
+};
 </script>

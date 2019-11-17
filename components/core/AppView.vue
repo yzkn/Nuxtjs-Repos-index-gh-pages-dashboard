@@ -10,22 +10,22 @@
 </template>
 
 <script>
-  import coreFooter from '~/components/core/AppFooter'
+import coreFooter from "~/components/core/AppFooter";
 
-  export default {
-    metaInfo () {
-      return {
-        title: 'Vuetify Material Dashboard by CreativeTim'
-      }
-    },
-    components: {
-      coreFooter
-    }
+export default {
+  metaInfo() {
+    return {
+      title: "Vuetify Material Dashboard by CreativeTim"
+    };
+  },
+  components: {
+    coreFooter
   }
+};
 </script>
 
 <style>
-  #core-view {
-    padding-bottom: 100px;
-  }
+#core-view {
+  padding-bottom: 100px;
+}
 </style>

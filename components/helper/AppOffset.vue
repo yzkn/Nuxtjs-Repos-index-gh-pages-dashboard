@@ -1,9 +1,5 @@
 <template>
-  <div
-    :style="styles"
-    :class="classes"
-    class="v-offset"
-  >
+  <div :style="styles" :class="classes" class="v-offset">
     <slot />
   </div>
 </template>
@@ -22,19 +18,19 @@ export default {
   },
 
   computed: {
-    classes () {
+    classes() {
       return {
-        'v-offset--full-width': this.fullWidth
-      }
+        "v-offset--full-width": this.fullWidth
+      };
     },
-    styles () {
+    styles() {
       return {
         top: `-${this.offset}px`,
         marginBottom: `-${this.offset}px`
-      }
+      };
     }
   }
-}
+};
 </script>
 
 <style>

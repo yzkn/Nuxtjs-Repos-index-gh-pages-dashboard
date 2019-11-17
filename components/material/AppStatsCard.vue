@@ -1,94 +1,67 @@
 <template>
-  <material-card
-    v-bind="$attrs"
-    class="v-card--material-stats"
-    v-on="$listeners"
-  >
-    <v-card
-      slot="offset"
-      :class="`elevation-${elevation}`"
-      :color="color"
-      class="pa-4"
-      dark
-    >
-      <v-icon
-        size="40"
-      >
-        {{ icon }}
-      </v-icon>
+  <material-card v-bind="$attrs" class="v-card--material-stats" v-on="$listeners">
+    <v-card slot="offset" :class="`elevation-${elevation}`" :color="color" class="pa-4" dark>
+      <v-icon size="40">{{ icon }}</v-icon>
     </v-card>
     <div class="text-xs-right">
-      <p
-        class="category grey--text font-weight-light"
-        v-text="title"
-      />
-      <h3
-        class="title display-1 font-weight-light">
-        {{ value }} <small>{{ smallValue }}</small>
+      <p class="category grey--text font-weight-light" v-text="title" />
+      <h3 class="title display-1 font-weight-light">
+        {{ value }}
+        <small>{{ smallValue }}</small>
       </h3>
     </div>
 
     <template slot="actions">
-      <v-icon
-        :color="subIconColor"
-        size="20"
-        class="mr-2"
-      >
-        {{ subIcon }}
-      </v-icon>
-      <span
-        :class="subTextColor"
-        class="caption font-weight-light"
-        v-text="subText"
-      />
+      <v-icon :color="subIconColor" size="20" class="mr-2">{{ subIcon }}</v-icon>
+      <span :class="subTextColor" class="caption font-weight-light" v-text="subText" />
     </template>
   </material-card>
 </template>
 
 <script>
-  import materialCard  from '~/components/material/AppCard'
+import materialCard from "~/components/material/AppCard";
 
-  export default {
-    inheritAttrs: false,
-    components: {
-      materialCard
+export default {
+  inheritAttrs: false,
+  components: {
+    materialCard
+  },
+  props: {
+    ...materialCard.props,
+    icon: {
+      type: String,
+      required: true
     },
-    props: {
-      ...materialCard.props,
-      icon: {
-        type: String,
-        required: true
-      },
-      subIcon: {
-        type: String,
-        default: undefined
-      },
-      subIconColor: {
-        type: String,
-        default: undefined
-      },
-      subTextColor: {
-        type: String,
-        default: undefined
-      },
-      subText: {
-        type: String,
-        default: undefined
-      },
-      title: {
-        type: String,
-        default: undefined
-      },
-      value: {
-        type: String,
-        default: undefined
-      },
-      smallValue: {
-        type: String,
-        default: undefined
-      }
+    subIcon: {
+      type: String,
+      default: undefined
+    },
+    subIconColor: {
+      type: String,
+      default: undefined
+    },
+    subTextColor: {
+      type: String,
+      default: undefined
+    },
+    subText: {
+      type: String,
+      default: undefined
+    },
+    title: {
+      type: String,
+      default: undefined
+    },
+    value: {
+      type: String,
+      default: undefined
+    },
+    smallValue: {
+      type: String,
+      default: undefined
     }
   }
+};
 </script>
 
 <style lang="scss">

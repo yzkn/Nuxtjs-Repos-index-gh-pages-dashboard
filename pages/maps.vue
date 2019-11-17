@@ -2,7 +2,6 @@
   <div>
     <div class="mapouter">
       <div class="gmap_canvas">
-
         <iframe
           id="gmap_canvas"
           width="100%"
@@ -19,22 +18,22 @@
 </template>
 
 <script>
-  export default {
-    layout: 'dashboard'
-  }
+export default {
+  layout: "dashboard"
+};
 </script>
 
 <style>
-  .mapouter {
-    text-align:right;
-    height:100%;
-    width:100%;
-    position: absolute;
-  }
-  .gmap_canvas {
-    overflow:hidden;
-    background:none!important;
-    height:100%;
-    width:100%;
-  }
+.mapouter {
+  text-align: right;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 100%;
+  width: 100%;
+}
 </style>

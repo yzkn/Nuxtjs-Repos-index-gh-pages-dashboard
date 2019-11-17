@@ -24,6 +24,7 @@
     color: $black-color;
 
     a {
+
       &,
       &:hover,
       &:focus,
@@ -51,6 +52,7 @@
 }
 
 @media all and (max-width: 550px) {
+
   .footer-items,
   .copyright {
     width: unset;

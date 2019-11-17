@@ -15,6 +15,7 @@
   @include toolbar-colors('bg-default', $gray-light);
 
   &[class*="bg-"] {
+
     .v-toolbar__title,
     .v-btn__content,
     .v-ripple__container {
@@ -34,11 +35,11 @@
     }
 
     .v-toolbar__items {
-      & > div {
+      &>div {
         padding: 0 !important;
       }
 
-      .toolbar-items{
+      .toolbar-items {
         align-items: center;
         border-radius: $border-radius-base;
         display: flex;
