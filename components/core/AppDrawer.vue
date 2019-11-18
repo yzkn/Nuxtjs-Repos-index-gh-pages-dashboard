@@ -53,7 +53,7 @@ export default {
       logo: "/vuetifylogo.png",
       links: [
         {
-          to: "/dashboard",
+          to: "/",
           icon: "mdi-view-dashboard",
           text: "Dashboard"
         },
