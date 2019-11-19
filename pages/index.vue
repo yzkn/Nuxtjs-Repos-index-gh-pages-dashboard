@@ -18,11 +18,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-layout justify-center align-center>
-                                <v-btn
-                                    color="success"
-                                    :disabled="isDisabled"
-                                    @click.prevent="authenticate"
-                                >Login</v-btn>
+                                <v-btn color="success" @click.prevent="authenticate">Login</v-btn>
                             </v-layout>
                         </v-card-actions>
                     </material-card>
@@ -46,6 +42,16 @@
                 defaultUsername: "admin"
             };
         },
+        async asyncData(context) {
+            if (context) {
+                if (context.query) {
+                    if (context.query.username) {
+                        console.log("query", context.query.username);
+                        // await setUsername(context.query.username);
+                    }
+                }
+            }
+        },
         computed: {},
         methods: {
             ...mapActions({
@@ -53,7 +59,7 @@
             }),
 
             async authenticate() {
-                if (!this.username !== "") {
+                if (this.username !== undefined && this.username !== null) {
                     await this.setUsername(this.username);
                     this.$router.push({ path: "dashboard" });
                 }
