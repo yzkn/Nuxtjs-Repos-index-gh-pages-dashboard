@@ -46,8 +46,15 @@
             if (context) {
                 if (context.query) {
                     if (context.query.username) {
-                        console.log("query", context.query.username);
-                        // await setUsername(context.query.username);
+                        console.log("query", context);
+                        // console.log("query", context.query.username);
+
+                        await context.store.dispatch(
+                            "user/setUsername",
+                            context.query.username
+                        );
+
+                        console.log("query", "dispatch");
                     }
                 }
             }
