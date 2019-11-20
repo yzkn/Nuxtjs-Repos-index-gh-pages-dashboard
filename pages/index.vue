@@ -3,7 +3,7 @@
         <v-container fluid fill-height>
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
-                    <material-card color="success" elevation="12" title="Connexion">
+                    <material-card color="success" elevation="12" title="User information">
                         <v-card-text>
                             <v-form>
                                 <v-text-field
@@ -11,14 +11,14 @@
                                     v-model="username"
                                     prepend-icon="person"
                                     name="username"
-                                    label="Login"
-                                    :placeholder="defaultUsername"
+                                    label="Username"
+                                    :placeholder="DefaultUsername"
                                 ></v-text-field>
                             </v-form>
                         </v-card-text>
                         <v-card-actions>
                             <v-layout justify-center align-center>
-                                <v-btn color="success" @click.prevent="authenticate">Login</v-btn>
+                                <v-btn color="success" @click.prevent="authenticate">Enter</v-btn>
                             </v-layout>
                         </v-card-actions>
                     </material-card>
@@ -38,23 +38,26 @@
         },
         data() {
             return {
-                username: "admin",
-                defaultUsername: "admin"
+                DefaultUsername: "ya-androidapp",
+                username: "admin"
             };
         },
         async asyncData(context) {
             if (context) {
                 if (context.query) {
                     if (context.query.username) {
-                        console.log("query", context);
+                        // console.log("query", context);
                         // console.log("query", context.query.username);
 
                         await context.store.dispatch(
                             "user/setUsername",
                             context.query.username
                         );
-
                         console.log("query", "dispatch");
+
+                        return {
+                            username: context.query.username
+                        };
                     }
                 }
             }
