@@ -43,6 +43,44 @@
             };
         },
         async asyncData(context) {
+            console.log("process", process);
+            if (process.browser) {
+                console.log("location.hostname", location.hostname);
+
+                let usrname = location.username;
+                if (usrname !== undefined && usrname !== null && usrname !== "") {
+                    console.log("usrname", usrname);
+                    return {
+                        username: usrname
+                    };
+                } else {
+                    const suffixGithubIo = ".github.io"; // "lhost"; // for test
+                    let hstname = location.hostname;
+                    if (hstname.indexOf(suffixGithubIo) > -1) {
+                        console.log(
+                            "suffixGithubIo",
+                            hstname.indexOf(suffixGithubIo)
+                        );
+                        return {
+                            username: hstname.split(suffixGithubIo)[0]
+                        };
+                    } else {
+                        let pthname = location.pathname;
+                        if (
+                            hstname.indexOf("github.com") > -1 &&
+                            pthname.length > 1
+                        ) {
+                            console.log(
+                                "github.com",
+                                hstname.indexOf("github.com")
+                            );
+                            return {
+                                username: pthname.substring(1).split("/")[0]
+                            };
+                        }
+                    }
+                }
+            }
             if (context) {
                 if (context.query) {
                     if (context.query.username) {
@@ -69,7 +107,11 @@
             }),
 
             async authenticate() {
-                if (this.username !== undefined && this.username !== null) {
+                if (
+                    this.username !== undefined &&
+                    this.username !== null &&
+                    this.username !== ""
+                ) {
                     await this.setUsername(this.username);
                     this.$router.push({ path: "dashboard" });
                 }
