@@ -29,6 +29,8 @@
 </template>
 
 <script>
+    // Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
+
     import { mapActions } from "vuex";
     import materialCard from "~/components/material/AppCard";
 
@@ -98,6 +100,10 @@
                         };
                     }
                 }
+
+                // TODO
+                context.store.commit("repos/SET_PAGE", 99);
+                console.log("repos/page", context.store.getters["repos/page"]);
             }
         },
         computed: {},
