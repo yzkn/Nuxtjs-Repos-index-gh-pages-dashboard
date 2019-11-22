@@ -1,11 +1,5 @@
 // Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
 export default {
-  async setUsername({
-    commit
-  }, user) {
-    commit('SET_USERNAME', user);
-  },
-
   async fetchRepos(context) {
     console.log('fetchRepos')
     const URL_GITHUB_API = "https://api.github.com/users/{USERNAME}/repos?per_page=100&page={PAGE}";

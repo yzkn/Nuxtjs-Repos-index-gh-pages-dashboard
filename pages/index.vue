@@ -100,10 +100,6 @@
                         };
                     }
                 }
-
-                // TODO
-                context.store.commit("repos/SET_PAGE", 99);
-                console.log("repos/page", context.store.getters["repos/page"]);
             }
         },
         computed: {},
