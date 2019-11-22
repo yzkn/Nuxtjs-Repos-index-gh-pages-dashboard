@@ -4,7 +4,7 @@ export default {
     console.log('fetchRepos')
     const URL_GITHUB_API = "https://api.github.com/users/{USERNAME}/repos?per_page=100&page={PAGE}";
 
-    const url = URL_GITHUB_API.replace("{USERNAME}", context.getters['user/username']).replace(
+    const url = URL_GITHUB_API.replace("{USERNAME}", context.getters['user/getUsername']).replace(
       "{PAGE}",
       context.getters['repos/page']
     );
