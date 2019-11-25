@@ -98,11 +98,7 @@
         />
       </v-flex>
       <v-flex md12 lg6>
-        <material-card
-          color="orange"
-          title="Employee Stats"
-          text="New employees on 15th September, 2016"
-        >
+        <material-card color="orange" title="Repository Stats" text="List of repositories">
           <v-data-table :headers="headers" :items="items" hide-actions>
             <template slot="headerCell" slot-scope="{ header }">
               <span class="font-weight-light text-warning text--darken-3" v-text="header.text" />
@@ -110,9 +106,9 @@
             <template slot="items" slot-scope="{ index, item }">
               <td>{{ index + 1 }}</td>
               <td>{{ item.name }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
-              <td class="text-xs-right">{{ item.country }}</td>
-              <td class="text-xs-right">{{ item.city }}</td>
+              <td class="text-xs-right">{{ item.forks_count }}</td>
+              <td class="text-xs-right">{{ item.owner.login }}</td>
+              <td class="text-xs-right">{{ item.git_url }}</td>
             </template>
           </v-data-table>
         </material-card>
@@ -213,6 +209,7 @@
 import materialCard from "~/components/material/AppCard";
 import materialChartCard from "~/components/material/AppChartCard";
 import materialStatsCard from "~/components/material/AppStatsCard";
+import { mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -305,64 +302,64 @@ export default {
         {
           sortable: false,
           text: "ID",
-          value: "id"
+          value: "repo.id"
         },
         {
           sortable: false,
           text: "Name",
-          value: "name"
+          value: "repo.name"
         },
         {
           sortable: false,
-          text: "Salary",
-          value: "salary",
+          text: "Forks",
+          value: "repo.forks_count",
           align: "right"
         },
         {
           sortable: false,
-          text: "Country",
-          value: "country",
+          text: "Login",
+          value: "repo.owner.login",
           align: "right"
         },
         {
           sortable: false,
-          text: "City",
-          value: "city",
+          text: "Git",
+          value: "repo.git_url",
           align: "right"
         }
       ],
-      items: [
-        {
-          name: "Dakota Rice",
-          country: "Niger",
-          city: "Oud-Tunrhout",
-          salary: "$35,738"
-        },
-        {
-          name: "Minerva Hooper",
-          country: "Curaçao",
-          city: "Sinaai-Waas",
-          salary: "$23,738"
-        },
-        {
-          name: "Sage Rodriguez",
-          country: "Netherlands",
-          city: "Overland Park",
-          salary: "$56,142"
-        },
-        {
-          name: "Philip Chanley",
-          country: "Korea, South",
-          city: "Gloucester",
-          salary: "$38,735"
-        },
-        {
-          name: "Doris Greene",
-          country: "Malawi",
-          city: "Feldkirchen in Kārnten",
-          salary: "$63,542"
-        }
-      ],
+      // items: [
+      // {
+      //   name: "Dakota Rice",
+      //   country: "Niger",
+      //   city: "Oud-Tunrhout",
+      //   salary: "$35,738"
+      // },
+      // {
+      //   name: "Minerva Hooper",
+      //   country: "Curaçao",
+      //   city: "Sinaai-Waas",
+      //   salary: "$23,738"
+      // },
+      // {
+      //   name: "Sage Rodriguez",
+      //   country: "Netherlands",
+      //   city: "Overland Park",
+      //   salary: "$56,142"
+      // },
+      // {
+      //   name: "Philip Chanley",
+      //   country: "Korea, South",
+      //   city: "Gloucester",
+      //   salary: "$38,735"
+      // },
+      // {
+      //   name: "Doris Greene",
+      //   country: "Malawi",
+      //   city: "Feldkirchen in Kārnten",
+      //   salary: "$63,542"
+      // }
+      // ],
       tabs: 0,
       list: {
         0: false,
@@ -400,6 +397,17 @@ export default {
       context.store.getters["user/getUsername"],
       context.store.getters["repos/getPage"]
     );
+  },
+  computed: {
+    items(context) {
+      console.log(
+        "dashboard.vue",
+        "computed",
+        "context",
+        context.$store.getters["repos/getRepos"]
+      );
+      return context.$store.getters["repos/getRepos"];
+    }
   },
   methods: {
     complete(index) {

@@ -15,7 +15,6 @@ export default {
       page
     );
     console.log('fetchRepos url', url);
-    return; // TODO
 
     const repoItems = await this.$axios
       .$get(url)

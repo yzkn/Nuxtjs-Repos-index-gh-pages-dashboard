@@ -115,13 +115,18 @@ export default {
     }),
 
     async authenticate() {
+      console.log("index.vue", "authenticate()");
+
       if (
         this.username !== undefined &&
         this.username !== null &&
         this.username !== ""
       ) {
+        console.log("index.vue", "authenticate()", "if");
         await this.setUsername(this.username);
+        console.log("index.vue", "authenticate()", "setUsername()");
         this.$router.push({ path: "dashboard" });
+        console.log("index.vue", "authenticate()", "push()");
       }
     }
   }
