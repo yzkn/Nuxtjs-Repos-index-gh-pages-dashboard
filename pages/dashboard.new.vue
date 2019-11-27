@@ -109,10 +109,10 @@
       <v-flex md12 lg6>
         <material-card
           color="orange"
-          title="Employee Stats"
-          text="New employees on 15th September, 2016"
+          title="Repository Stats"
+          text="List of repositories"
         >
-          <v-data-table :headers="headers" :items="items" hide-actions>
+          <v-data-table :headers="headers" :items="repoItems" hide-actions>
             <template slot="headerCell" slot-scope="{ header }">
               <span
                 class="font-weight-light text-warning text--darken-3"
@@ -121,10 +121,63 @@
             </template>
             <template slot="items" slot-scope="{ index, item }">
               <td>{{ index + 1 }}</td>
-              <td>{{ item.name }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
-              <td class="text-xs-right">{{ item.country }}</td>
-              <td class="text-xs-right">{{ item.city }}</td>
+              <td>
+                <a :href="item.owner.html_url" target="_blank">
+                  <img class="avatar-img" :src="item.owner.avatar_url" />
+                  {{ item.owner.login }}
+                </a>
+                &nbsp;/
+                <a :href="item.html_url" target="_blank"
+                  >&nbsp;{{ item.name }}&nbsp;</a
+                >
+              </td>
+              <td>
+                <a :href="item.git_url" target="_blank">git</a>
+                <br />
+                <a :href="item.ssh_url" target="_blank">ssh</a>
+                <br />
+                <a :href="item.clone_url" target="_blank">clone</a>
+              </td>
+              <td>
+                <span v-if="item.has_pages">
+                  <a
+                    :href="
+                      'https://' + item.owner.login + '.github.io/' + item.name
+                    "
+                    target="_blank"
+                    >Pages</a
+                  >
+                </span>
+              </td>
+              <td>{{ item.created_at }}</td>
+              <td>{{ item.updated_at }}</td>
+              <td>{{ item.language != null ? item.language : "---" }}</td>
+              <td>{{ item.license != null ? item.license.name : "---" }}</td>
+              <td>{{ item.archived ? "T" : "-" }}</td>
+              <td>{{ item.disabled ? "T" : "-" }}</td>
+              <td>
+                {{ item.fork ? "T" : "-" }}
+                <br />
+                <a :href="item.html_url + '/network/members'" target="_blank">{{
+                  item.forks_count
+                }}</a>
+              </td>
+              <td>
+                <a :href="item.html_url + '/issues'" target="_blank">{{
+                  item.open_issues_count
+                }}</a>
+              </td>
+              <td>
+                <a :href="item.html_url + '/stargazers'" target="_blank">{{
+                  item.stargazers_count
+                }}</a>
+              </td>
+              <td>
+                <a :href="item.html_url + '/watchers'" target="_blank">{{
+                  item.watchers_count
+                }}</a>
+              </td>
+              <td>{{ item.description != null ? item.description : "---" }}</td>
             </template>
           </v-data-table>
         </material-card>
@@ -267,6 +320,7 @@
 import materialCard from "~/components/material/AppCard";
 import materialChartCard from "~/components/material/AppChartCard";
 import materialStatsCard from "~/components/material/AppStatsCard";
+import { mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -358,63 +412,77 @@ export default {
       headers: [
         {
           sortable: true,
-          text: "ID",
-          value: "id"
+          text: "Repository",
+          value: "item.html_url",
+          align: "right"
         },
+        { sortable: true, text: "URL", value: "item.url", align: "right" },
         {
           sortable: true,
-          text: "Name",
-          value: "name"
-        },
-        {
-          sortable: true,
-          text: "Salary",
-          value: "salary",
+          text: "Github Pages",
+          value: "item.has_pages",
           align: "right"
         },
         {
           sortable: true,
-          text: "Country",
-          value: "country",
+          text: "Created",
+          value: "item.created_at",
           align: "right"
         },
         {
           sortable: true,
-          text: "City",
-          value: "city",
+          text: "Updated",
+          value: "item.updated_at",
           align: "right"
-        }
-      ],
-      items: [
-        {
-          name: "Dakota Rice",
-          country: "Niger",
-          city: "Oud-Tunrhout",
-          salary: "$35,738"
         },
         {
-          name: "Minerva Hooper",
-          country: "Curaçao",
-          city: "Sinaai-Waas",
-          salary: "$23,738"
+          sortable: true,
+          text: "Language",
+          value: "item.language",
+          align: "right"
         },
         {
-          name: "Sage Rodriguez",
-          country: "Netherlands",
-          city: "Overland Park",
-          salary: "$56,142"
+          sortable: true,
+          text: "License",
+          value: "item.license.name",
+          align: "right"
         },
         {
-          name: "Philip Chanley",
-          country: "Korea, South",
-          city: "Gloucester",
-          salary: "$38,735"
+          sortable: true,
+          text: "Archived",
+          value: "item.archived",
+          align: "right"
         },
         {
-          name: "Doris Greene",
-          country: "Malawi",
-          city: "Feldkirchen in Kārnten",
-          salary: "$63,542"
+          sortable: true,
+          text: "Disabled",
+          value: "item.disabled",
+          align: "right"
+        },
+        { sortable: true, text: "Fork", value: "item.fork", align: "right" },
+        {
+          sortable: true,
+          text: "Issues",
+          value: "item.issues",
+          align: "right"
+        },
+        {
+          sortable: true,
+          text: "Stargazers",
+          value: "item.stargazers",
+          align: "right"
+        },
+        {
+          sortable: true,
+          text: "Watchers",
+          value: "item.watchers",
+          align: "right"
+        },
+        {
+          sortable: true,
+          text: "Description",
+          value: "item.description",
+          align: "right"
         }
       ],
       tabs: 0,
@@ -425,40 +493,54 @@ export default {
       }
     };
   },
+  async asyncData(context) {
+    console.log(
+      "dashboard.vue",
+      "asyncData()",
+      "repos/getPage",
+      context.store.getters["repos/getPage"]
+    );
+    console.log(
+      "dashboard.vue",
+      "asyncData()",
+      "repos/getRepos",
+      context.store.getters["repos/getRepos"]
+    );
+    console.log(
+      "dashboard.vue",
+      "asyncData()",
+      "user/getUsername",
+      context.store.getters["user/getUsername"]
+    );
+
+    if (context.store.getters["repos/getRepos"].length) {
+      return;
+    }
+
+    await context.store.dispatch(
+      "repos/fetchRepos",
+      context.store.getters["user/getUsername"],
+      context.store.getters["repos/getPage"]
+    );
+  },
+  computed: {
+    repoItems(context) {
+      console.log(
+        "dashboard.vue",
+        "computed",
+        "context",
+        context.$store.getters["repos/getRepos"]
+      );
+      return context.$store.getters["repos/getRepos"];
+    }
+  },
   methods: {
     complete(index) {
       this.list[index] = !this.list[index];
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      /*this.dailySalesChart.options = {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        };
-        this.dataCompletedTasksChart.options = {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        };*/
-    });
+    this.$nextTick(() => {});
   }
 };
 </script>
