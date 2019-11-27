@@ -93,22 +93,22 @@
     data: () => ({
     headers: [
       {
-        sortable: false,
+        sortable: true,
         text: 'Name',
         value: 'name'
       },
       {
-        sortable: false,
+        sortable: true,
         text: 'Country',
         value: 'country'
       },
       {
-        sortable: false,
+        sortable: true,
         text: 'City',
         value: 'city'
       },
       {
-        sortable: false,
+        sortable: true,
         text: 'Salary',
         value: 'salary',
         align: 'right'
@@ -139,7 +139,7 @@
       }, {
         name: 'Doris Greene',
         country: 'Malawi',
-        city: 'Feldkirchen in KƒÅrnten',
+        city: 'Feldkirchen in Kƒˇrnten',
         salary: '$63,542'
       }, {
         name: 'Mason Porter',
