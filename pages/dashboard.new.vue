@@ -413,75 +413,75 @@ export default {
         {
           sortable: true,
           text: "Repository",
-          value: "item.html_url",
+          value: "html_url",
           align: "right"
         },
         { sortable: true, text: "URL", value: "item.url", align: "right" },
         {
           sortable: true,
           text: "Github Pages",
-          value: "item.has_pages",
+          value: "has_pages",
           align: "right"
         },
         {
           sortable: true,
           text: "Created",
-          value: "item.created_at",
+          value: "created_at",
           align: "right"
         },
         {
           sortable: true,
           text: "Updated",
-          value: "item.updated_at",
+          value: "updated_at",
           align: "right"
         },
         {
           sortable: true,
           text: "Language",
-          value: "item.language",
+          value: "language",
           align: "right"
         },
         {
           sortable: true,
           text: "License",
-          value: "item.license.name",
+          value: "license.name",
           align: "right"
         },
         {
           sortable: true,
           text: "Archived",
-          value: "item.archived",
+          value: "archived",
           align: "right"
         },
         {
           sortable: true,
           text: "Disabled",
-          value: "item.disabled",
+          value: "disabled",
           align: "right"
         },
         { sortable: true, text: "Fork", value: "item.fork", align: "right" },
         {
           sortable: true,
           text: "Issues",
-          value: "item.issues",
+          value: "issues",
           align: "right"
         },
         {
           sortable: true,
           text: "Stargazers",
-          value: "item.stargazers",
+          value: "stargazers",
           align: "right"
         },
         {
           sortable: true,
           text: "Watchers",
-          value: "item.watchers",
+          value: "watchers",
           align: "right"
         },
         {
           sortable: true,
           text: "Description",
-          value: "item.description",
+          value: "description",
           align: "right"
         }
       ],
