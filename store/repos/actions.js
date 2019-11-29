@@ -19,13 +19,18 @@ export default {
     const repoItems = await this.$axios
       .$get(url)
       .then(function (response) {
-        console.log('ADD_REPOS', JSON.stringify(response));
+        console.log('ADD_REPOS') // , JSON.stringify(response));
         context.commit('ADD_REPOS', response)
         if (response.length > 99) {
           context.commit('INCREMENT_PAGE')
           context.dispatch('fetchRepos')
         } else {
-          console.log(context.getters['getRepos'])
+          // console.log(context.getters['getRepos'])
+          context.getters['getRepos'].forEach(function (value) {
+            if (undefined !== value && null !== value && undefined !== value.html_url && null !== value.html_url)
+              console.log("actions.js", value.html_url);
+          });
+          context.commit('NOTIFY')
         }
       })
       .catch(function (error) {

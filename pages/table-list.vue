@@ -7,7 +7,7 @@
           title="Simple Table"
           text="Here is a subtitle for this table"
         >
-          <v-data-table :headers="headers" :items="items" hide-actions>
+          <v-data-table :headers="headers" :items="repoItems" hide-actions>
             <template slot="headerCell" slot-scope="{ header }">
               <span
                 class="subheading font-weight-light text-success text--darken-3"
@@ -15,38 +15,26 @@
               />
             </template>
             <template slot="items" slot-scope="{ item }">
-              <td>{{ item.name }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
-            </template>
-          </v-data-table>
-        </material-card>
-      </v-flex>
-      <v-flex md12>
-        <material-card
-          color="green"
-          flat
-          full-width
-          title="Table on Plain Background"
-          text="Here is a subtitle for this table"
-        >
-          <v-data-table
-            :headers="headers"
-            :items="items.slice(0, 7)"
-            hide-actions
-          >
-            <template slot="headerCell" slot-scope="{ header }">
-              <span
-                class="subheading font-weight-light text--darken-3"
-                v-text="header.text"
-              />
-            </template>
-            <template slot="items" slot-scope="{ item }">
-              <td>{{ item.name }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
+              <td>{{ item.html_url }}</td>
+              <td>{{ item.url }}</td>
+              <td>{{ item.has_pages }}</td>
+              <td>{{ item.created_at }}</td>
+              <td>{{ item.updated_at }}</td>
+              <td>{{ item.language }}</td>
+              <td>
+                {{
+                  undefined !== item.license && null !== item.license
+                    ? item.license.name
+                    : ""
+                }}
+              </td>
+              <td>{{ item.archived }}</td>
+              <td>{{ item.disabled }}</td>
+              <td class="text-xs-right">{{ item.fork }}</td>
+              <td class="text-xs-right">{{ item.issues }}</td>
+              <td class="text-xs-right">{{ item.stargazers }}</td>
+              <td class="text-xs-right">{{ item.watchers }}</td>
+              <td>{{ item.description }}</td>
             </template>
           </v-data-table>
         </material-card>
@@ -57,6 +45,7 @@
 
 <script>
 import materialCard from "~/components/material/AppCard";
+import { mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -71,7 +60,7 @@ export default {
         value: "html_url",
         align: "right"
       },
-      { sortable: true, text: "URL", value: "item.url", align: "right" },
+      { sortable: true, text: "URL", value: "url", align: "right" },
       {
         sortable: true,
         text: "Github Pages",
@@ -114,7 +103,7 @@ export default {
         value: "disabled",
         align: "right"
       },
-      { sortable: true, text: "Fork", value: "item.fork", align: "right" },
+      { sortable: true, text: "Fork", value: "fork", align: "right" },
       {
         sortable: true,
         text: "Issues",
@@ -143,41 +132,75 @@ export default {
     items: [
       {
         html_url: "Dakota Rice",
-        country: "Niger",
-        city: "Oud-Tunrhout",
-        salary: "$35,738"
+        url: "Niger",
+        has_pages: true,
+        created_at: "2020/01/23 04:56:00",
+        license: {
+          name: "Apache"
+        }
       },
       {
         html_url: "Minerva Hooper",
-        country: "CuraÃ§ao",
-        city: "Sinaai-Waas",
-        salary: "$23,738"
+        url: "CuraÃ§ao",
+        has_pages: true,
+        created_at: "2020/01/24 04:56:00"
       },
       {
         html_url: "Sage Rodriguez",
-        country: "Netherlands",
-        city: "Overland Park",
-        salary: "$56,142"
-      },
-      {
-        html_url: "Philip Chanley",
-        country: "Korea, South",
-        city: "Gloucester",
-        salary: "$38,735"
-      },
-      {
-        html_url: "Doris Greene",
-        country: "Malawi",
-        city: "Feldkirchen in KÄÿrnten",
-        salary: "$63,542"
-      },
-      {
-        html_url: "Mason Porter",
-        country: "Chile",
-        city: "Gloucester",
-        salary: "$78,615"
+        url: "Netherlands",
+        has_pages: true,
+        created_at: "2020/01/25 04:56:00"
       }
     ]
-  })
+  }),
+  async asyncData(context) {
+    // TODO
+    await context.store.dispatch("user/setUsername", "ya-androidapp");
+    await context.store.commit("repos/SET_PAGE", 1);
+
+    console.log(
+      "table-list.vue",
+      "asyncData()",
+      "repos/getPage",
+      context.store.getters["repos/getPage"]
+    );
+    // console.log(
+    //   "table-list.vue",
+    //   "asyncData()",
+    //   "repos/getRepos",
+    //   context.store.getters["repos/getRepos"]
+    // );
+    console.log(
+      "table-list.vue",
+      "asyncData()",
+      "user/getUsername",
+      context.store.getters["user/getUsername"]
+    );
+
+    if (context.store.getters["repos/getRepos"].length) {
+      return;
+    }
+
+    await context.store.dispatch(
+      "repos/fetchRepos",
+      context.store.getters["user/getUsername"],
+      context.store.getters["repos/getPage"]
+    );
+  },
+  computed: {
+    repoItems(context) {
+      // console.log(
+      //   "table-list.vue",
+      //   "computed",
+      //   "context",
+      //   context.$store.getters["repos/getRepos"]
+      // );
+      let items = context.$store.getters["repos/getRepos"];
+      // items.forEach(function(value) {
+      //   console.log(value.html_url);
+      // });
+      return items;
+    }
+  }
 };
 </script>
