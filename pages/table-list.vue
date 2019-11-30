@@ -215,3 +215,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+img.avatar-img {
+  height: 1em;
+}
+</style>
