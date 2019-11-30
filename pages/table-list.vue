@@ -14,8 +14,18 @@
                 v-text="header.text"
               />
             </template>
-            <template slot="items" slot-scope="{ item }">
-              <td>{{ item.html_url }}</td>
+            <template slot="items" slot-scope="{ index, item }">
+              <td>{{ index + 1 }}</td>
+              <td>
+                <a :href="item.owner.html_url" target="_blank">
+                  <img class="avatar-img" :src="item.owner.avatar_url" />
+                  {{ item.owner.login }}
+                </a>
+                &nbsp;/
+                <a :href="item.html_url" target="_blank"
+                  >&nbsp;{{ item.name }}&nbsp;</a
+                >
+              </td>
               <td>{{ item.url }}</td>
               <td>{{ item.has_pages }}</td>
               <td>{{ item.created_at }}</td>
@@ -54,6 +64,7 @@ export default {
   },
   data: () => ({
     headers: [
+      { sortable: false, text: "#", value: "index", align: "right" },
       {
         sortable: true,
         text: "Repository",
@@ -158,24 +169,24 @@ export default {
     await context.store.dispatch("user/setUsername", "ya-androidapp");
     await context.store.commit("repos/SET_PAGE", 1);
 
-    console.log(
-      "table-list.vue",
-      "asyncData()",
-      "repos/getPage",
-      context.store.getters["repos/getPage"]
-    );
+    // console.log(
+    //   "table-list.vue",
+    //   "asyncData()",
+    //   "repos/getPage",
+    //   context.store.getters["repos/getPage"]
+    // );
     // console.log(
     //   "table-list.vue",
     //   "asyncData()",
     //   "repos/getRepos",
     //   context.store.getters["repos/getRepos"]
     // );
-    console.log(
-      "table-list.vue",
-      "asyncData()",
-      "user/getUsername",
-      context.store.getters["user/getUsername"]
-    );
+    // console.log(
+    //   "table-list.vue",
+    //   "asyncData()",
+    //   "user/getUsername",
+    //   context.store.getters["user/getUsername"]
+    // );
 
     if (context.store.getters["repos/getRepos"].length) {
       return;
