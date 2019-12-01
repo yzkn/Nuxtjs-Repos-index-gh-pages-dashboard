@@ -39,8 +39,12 @@
                   >Pages</a
                 >
               </td>
-              <td>{{ item.created_at }}</td>
-              <td>{{ item.updated_at }}</td>
+              <td :title="item.created_at">
+                {{ item.created_at }}
+              </td>
+              <td :title="item.updated_at">
+                {{ item.updated_at }}
+              </td>
               <td>{{ item.language }}</td>
               <td>
                 {{
