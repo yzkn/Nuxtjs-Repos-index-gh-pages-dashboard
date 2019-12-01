@@ -26,8 +26,19 @@
                   >&nbsp;{{ item.name }}&nbsp;</a
                 >
               </td>
-              <td>{{ item.url }}</td>
-              <td>{{ item.has_pages }}</td>
+              <td>
+                <a :href="item.url" target="_blank">GitHub</a>
+              </td>
+              <td>
+                <a
+                  v-if="item.has_pages"
+                  :href="
+                    'https://' + item.owner.login + '.github.io/' + item.name
+                  "
+                  target="_blank"
+                  >Pages</a
+                >
+              </td>
               <td>{{ item.created_at }}</td>
               <td>{{ item.updated_at }}</td>
               <td>{{ item.language }}</td>
@@ -74,7 +85,7 @@ export default {
       { sortable: true, text: "URL", value: "url", align: "right" },
       {
         sortable: true,
-        text: "Github Pages",
+        text: "Pages",
         value: "has_pages",
         align: "right"
       },
@@ -138,29 +149,6 @@ export default {
         text: "Description",
         value: "description",
         align: "right"
-      }
-    ],
-    items: [
-      {
-        html_url: "Dakota Rice",
-        url: "Niger",
-        has_pages: true,
-        created_at: "2020/01/23 04:56:00",
-        license: {
-          name: "Apache"
-        }
-      },
-      {
-        html_url: "Minerva Hooper",
-        url: "Curaçao",
-        has_pages: true,
-        created_at: "2020/01/24 04:56:00"
-      },
-      {
-        html_url: "Sage Rodriguez",
-        url: "Netherlands",
-        has_pages: true,
-        created_at: "2020/01/25 04:56:00"
       }
     ]
   }),
