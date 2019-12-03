@@ -431,6 +431,18 @@ export default {
     }
   },
   mounted() {
+    if (
+      undefined !== this.$store.getters["user/getUsername"] &&
+      null !== this.$store.getters["user/getUsername"] &&
+      0 != this.$store.getters["user/getUsername"].length
+    ) {
+      console.log(
+        "dashboard.vue",
+        "mounted()",
+        'this.$store.getters["user/getUsername"]',
+        this.$store.getters["user/getUsername"]
+      );
+    }
     this.$nextTick(() => {
       /*this.dailySalesChart.options = {
           lineSmooth: this.$chartist.Interpolation.cardinal({

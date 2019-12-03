@@ -13,17 +13,6 @@ export default {
       }
     });
     // state.repos = state.repos.concat(repos);
-
-  },
-  INCREMENT_PAGE(state) {
-    console.log('INCREMENT_PAGE state1', state.page)
-    state.page++
-    console.log('INCREMENT_PAGE state2', state.page)
-  },
-  SET_PAGE(state, page) {
-    console.log('SET_PAGE state1', state.page)
-    state.page = page
-    console.log('SET_PAGE state2', state.page)
   },
   NOTIFY(state) {
     state.repos.splice();

@@ -158,27 +158,18 @@ export default {
   }),
   async asyncData(context) {
     // TODO
-    await context.store.dispatch("user/setUsername", "ya-androidapp");
-    await context.store.commit("repos/SET_PAGE", 1);
-
-    // console.log(
-    //   "table-list.vue",
-    //   "asyncData()",
-    //   "repos/getPage",
-    //   context.store.getters["repos/getPage"]
-    // );
-    // console.log(
-    //   "table-list.vue",
-    //   "asyncData()",
-    //   "repos/getRepos",
-    //   context.store.getters["repos/getRepos"]
-    // );
-    // console.log(
-    //   "table-list.vue",
-    //   "asyncData()",
-    //   "user/getUsername",
-    //   context.store.getters["user/getUsername"]
-    // );
+    if (
+      undefined === context.store.getters["user/getUsername"] ||
+      null === context.store.getters["user/getUsername"] ||
+      context.store.getters["user/getUsername"].length == 0
+    ) {
+      await context.store.dispatch(
+        "table-list.vue",
+        "asyncData()",
+        "user/setUsername",
+        "ya-androidapp"
+      );
+    }
 
     if (context.store.getters["repos/getRepos"].length) {
       return;
@@ -186,8 +177,7 @@ export default {
 
     await context.store.dispatch(
       "repos/fetchRepos",
-      context.store.getters["user/getUsername"],
-      context.store.getters["repos/getPage"]
+      context.store.getters["user/getUsername"]
     );
   },
   computed: {

@@ -3,9 +3,13 @@
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
-          <material-card color="success" elevation="12" title="User information">
+          <material-card
+            color="success"
+            elevation="12"
+            title="User information"
+          >
             <v-card-text>
-              <v-form>
+              <v-form @submit.prevent="authenticate">
                 <v-text-field
                   type="text"
                   v-model="username"
@@ -18,7 +22,9 @@
             </v-card-text>
             <v-card-actions>
               <v-layout justify-center align-center>
-                <v-btn color="success" @click.prevent="authenticate">Enter</v-btn>
+                <v-btn color="success" @click.prevent="authenticate"
+                  >Enter</v-btn
+                >
               </v-layout>
             </v-card-actions>
           </material-card>
@@ -90,10 +96,16 @@ export default {
       }
     }
     if (context) {
+      console.log("index.vue", "asyncData()", "context", context);
       if (context.query) {
+        console.log("index.vue", "asyncData()", "context.query", context.query);
         if (context.query.username) {
-          //   console.log("index.vue", "asyncData()", "query", context);
-          //   console.log("index.vue", "asyncData()", "query", context.query.username);
+          console.log(
+            "index.vue",
+            "asyncData()",
+            "context.query.username",
+            context.query.username
+          );
 
           await context.store.dispatch(
             "user/setUsername",
@@ -107,6 +119,7 @@ export default {
         }
       }
     }
+    console.log("index.vue", "asyncData()", "end");
   },
   computed: {},
   methods: {
@@ -124,10 +137,29 @@ export default {
       ) {
         console.log("index.vue", "authenticate()", "if");
         await this.setUsername(this.username);
-        console.log("index.vue", "authenticate()", "setUsername()");
+        console.log(
+          "index.vue",
+          "authenticate()",
+          "setUsername()",
+          this.username
+        );
+        if (
+          undefined !== this.$store.getters["user/getUsername"] &&
+          null !== this.$store.getters["user/getUsername"] &&
+          0 != this.$store.getters["user/getUsername"].length
+        ) {
+          console.log(
+            'this.$store.getters["user/getUsername"]',
+            this.$store.getters["user/getUsername"]
+          );
+        }
         this.$router.push({ path: "dashboard" });
         console.log("index.vue", "authenticate()", "push()");
       }
+    },
+
+    none() {
+      return;
     }
   }
 };
